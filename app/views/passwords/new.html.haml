@@ -1,0 +1,15 @@
+%br
+.row
+  .col-3
+  .col-6
+    .card.mx-xl-5
+      .card-body
+        #clearance.password-reset
+          %h2= t(".title")
+          %p= t(".description")
+          = form_for :password, url: passwords_path do |form|
+            .form-group
+              = form.label :email
+              = form.text_field :email, type: 'email', class: 'form-control'
+            .text-center.py-4
+              = form.submit class: 'btn btn-default'

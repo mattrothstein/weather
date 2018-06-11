@@ -1,0 +1,13 @@
+%br
+.row
+  .col-3
+  .col-6
+    .card.mx-xl-5
+      .card-body
+        #clearance.sign-up
+          = form_for @user do |form|
+            = render partial: '/users/form', object: form
+            .text-center.py-4
+              = form.submit class: 'btn btn-default'
+            %center.other-links
+              = link_to t(".sign_in"), sign_in_path

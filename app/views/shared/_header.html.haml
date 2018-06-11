@@ -1,0 +1,13 @@
+%header
+  %nav.navbar.navbar-expand-lg.navbar-dark.default-color
+    %a.navbar-brand{:href => root_path}
+      %strong Weather
+    %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
+      %span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      %ul.navbar-nav.mr-auto
+        - if signed_in?
+          %li.nav-item
+            %a.nav-link{:href => "#"} Cities
+          %li.nav-item
+            = button_to  I18n.t("layouts.application.sign_out"), sign_out_path, method: :delete, class: "nav-link btn btn-sm btn-elegant"
