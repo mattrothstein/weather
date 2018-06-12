@@ -1,0 +1,13 @@
+%br
+.row
+  .col-3
+  .col-6
+    .card.mx-xl-5
+      .card-body
+        %h1 Editing city
+
+        = render 'form'
+
+        = link_to 'Show', @city
+        \|
+        = link_to 'Back', cities_path
