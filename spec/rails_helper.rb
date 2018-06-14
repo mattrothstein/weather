@@ -6,6 +6,8 @@ require 'rspec/rails'
 require 'support/factory_bot'
 ActiveRecord::Migration.maintain_test_schema!
 require 'shoulda/matchers'
+require 'webmock/rspec'
+require "clearance/rspec"
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
