@@ -1,0 +1,25 @@
+%br
+.row
+  .col-3
+  .col-6
+    %h1 Listing Saved Cities
+    %table.table
+      %thead
+        %tr
+          %th Location
+          %th Current Temperature
+          %th
+          %th
+
+      %tbody
+        - @user_cities.each do |user_city|
+          - weather = WeatherPresenter.new(user_city)
+          %tr
+            %td= weather.location
+            %td= weather.current_temp
+            %td= link_to 'Show', user_city
+            %td= link_to 'Destroy', user_city, method: :delete, data: { confirm: 'Are you sure?' }
+
+    %br
+
+    = link_to 'New User city', new_user_city_path

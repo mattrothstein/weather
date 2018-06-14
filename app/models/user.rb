@@ -1,4 +1,4 @@
 class User < ApplicationRecord
   include Clearance::User
-  has_many :cities
+  has_many :user_cities
 end

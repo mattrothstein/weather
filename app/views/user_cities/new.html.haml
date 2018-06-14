@@ -1,0 +1,21 @@
+%br
+.row
+  .col-4
+    .card.mx-xl-5
+      .card-body
+        %h4 City Search
+        .form-group
+          %label City Name Search
+          %input#city-search.form-control
+
+  .col-8
+    %h4 Matching Cities
+    #city-list
+      %p no cities found
+
+:javascript
+  $("#city-search").keyup(function() {
+    var value = $(this).val();
+    $.get("/open_weather_cities", { city_name: value });
+    return false;
+  });

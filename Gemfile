@@ -8,6 +8,7 @@ gem 'clearance'
 gem 'coffee-rails', '~> 4.2'
 gem "haml-rails", "~> 1.0"
 gem 'jbuilder', '~> 2.5'
+gem 'open-weather'
 gem 'pg'
 gem 'puma', '~> 3.11'
 gem 'rails', '~> 5.2.0'

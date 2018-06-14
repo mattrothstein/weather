@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :cities
+  get 'open_weather_cities' => 'open_weather_cities#index'
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
 
@@ -13,5 +13,7 @@ Rails.application.routes.draw do
   delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"
   get "/sign_up" => "clearance/users#new", as: "sign_up"
   resources :users
-  root 'users#index'
+  resources :user_cities, only: [:index, :show, :destroy, :new]
+  post '/user_cities/:open_weather_city_id' => 'user_cities#create'
+  root 'user_cities#index'
 end
