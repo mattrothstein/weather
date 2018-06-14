@@ -16,7 +16,7 @@ RSpec.describe UserCitiesController, type: :routing do
     end
 
     it "routes to #create" do
-      expect(:post => "/user_cities/1").to route_to("user_cities#create", :open_weather_city_id => 1)
+      expect(:post => "/user_cities/1").to route_to("user_cities#create", :open_weather_city_id => "1")
     end
 
     it "routes to #destroy" do

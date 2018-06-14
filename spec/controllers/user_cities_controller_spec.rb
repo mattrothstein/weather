@@ -22,7 +22,6 @@ require 'rails_helper'
 # expectations of assigns and templates rendered. These features have been
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
-
 RSpec.describe UserCitiesController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
@@ -30,7 +29,6 @@ RSpec.describe UserCitiesController, type: :controller do
   # adjust the attributes here as well.
   let(:user) { create(:user) }
   let(:open_weather_city) { OpenWeatherCity.create(name: 'miami', country: 'us', city_id: 12345)}
-
   let(:valid_attributes) {
     { user_id: user.id, open_weather_city_id: open_weather_city.id }
   }
@@ -48,47 +46,77 @@ RSpec.describe UserCitiesController, type: :controller do
   end
 
   describe "GET #index" do
+    before do
+      stub_request(:get, "http://api.openweathermap.org/data/2.5/forecast?APPID=fb1c9edf19acb8411170acba2a672f53&cnt=5&id=2643743&units=imperial").
+        with(
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Host'=>'api.openweathermap.org',
+          'User-Agent'=>'Ruby'
+        }).to_return(status: 200, body: file_fixture("open_weather_city_response.json"), headers: {})
+    end
+
     it "returns a success response" do
       user_city = UserCity.create! valid_attributes
       get :index, params: {}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
   describe "GET #show" do
+    before do
+      stub_request(:get, "http://api.openweathermap.org/data/2.5/forecast?APPID=fb1c9edf19acb8411170acba2a672f53&cnt=5&id=2643743&units=imperial").
+        with(
+        headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Host'=>'api.openweathermap.org',
+          'User-Agent'=>'Ruby'
+        }).to_return(status: 200, body: file_fixture("open_weather_city_response.json"), headers: {})
+
+      stub_request(:get, "http://api.openweathermap.org/data/2.5/forecast?APPID=fb1c9edf19acb8411170acba2a672f53&cnt=5&id=12345&units=imperial").
+        with(
+        headers: {
+       	  'Accept'=>'*/*',
+       	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+       	  'Host'=>'api.openweathermap.org',
+       	  'User-Agent'=>'Ruby'
+        }).to_return(status: 200, body: file_fixture("open_weather_city_response.json"), headers: {})
+    end
+
     it "returns a success response" do
       user_city = UserCity.create! valid_attributes
       get :show, params: {id: user_city.to_param}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
   describe "GET #new" do
     it "returns a success response" do
       get :new, params: {}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
-
 
   describe "POST #create" do
     context "with valid params" do
       it "creates a new UserCity" do
         expect {
-          post :create, params: {user_city: valid_attributes}, session: valid_session
+          post :create, params: {open_weather_city_id: open_weather_city.id}, session: valid_session
         }.to change(UserCity, :count).by(1)
       end
 
       it "redirects to the created user_city" do
-        post :create, params: {user_city: valid_attributes}, session: valid_session
+        post :create, params: {open_weather_city_id: open_weather_city.id}, session: valid_session
         expect(response).to redirect_to(UserCity.last)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {user_city: invalid_attributes}, session: valid_session
-        expect(response).to be_success
+        post :create, params: {open_weather_city_id: 0}, session: valid_session
+        expect(response).to be_successful
       end
     end
   end
