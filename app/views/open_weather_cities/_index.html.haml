@@ -1,0 +1,18 @@
+%table.table
+  %thead
+    %tr
+      %th City
+      %th Country
+      %th Open Weather ID
+      %th Save as Favorite
+  %tbody
+    - @open_weather_cities.each do |city|
+      %tr
+        %td
+          = city.name.titleize
+        %td
+          = city.country
+        %td
+          = city.city_id
+        %td
+          = link_to 'Save', user_city_path(city.id), method: :post, class: 'btn btn-sm btn-default'

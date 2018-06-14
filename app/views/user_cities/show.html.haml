@@ -1,0 +1,60 @@
+%br
+.row
+  .col-4
+    .card.mx-xl-5
+      .card-body
+        .row
+          .col-12
+            %h2
+              = @city.location
+          .col-6
+            %p
+              %b Temperature:
+              = @city.current_temp
+            %p
+              %b Condition:
+              = @city.current_condition
+            %p
+              %b Sunrise:
+              = @city.sunrise
+            %p
+              %b Sunset:
+              = @city.sunset
+          .col-6
+            = image_tag @city.icon_url, size: "80"
+        = link_to 'Back', user_cities_path
+  .col-6
+    .card.mx-xl-5
+      .card-body
+        .row
+          .col-12
+            %h2 Five Day Forecast
+          .col-12
+            %table.table
+              %thead
+                %tr
+                  %th Date
+                  %th Average Temp
+                  %th High
+                  %th Low
+                  %th Humidity
+                  %th Condition
+                  %th
+              %tbody
+                - @forecast.each do |day|
+                  - daily_weather = ForecastPresenter.new(day)
+                  %tr
+                    %td
+                      = daily_weather.date
+                    %td
+                      = daily_weather.temp
+                    %td
+                      = daily_weather.temp_max
+                    %td
+                      = daily_weather.temp_min
+                    %td
+                      = daily_weather.humidity
+                    %td
+                      = daily_weather.condition
+                    %td
+                      = image_tag daily_weather.icon_url, size: "35"
